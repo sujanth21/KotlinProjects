@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 
 class GameActivity : AppCompatActivity() {
 
@@ -36,6 +37,11 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun incrementScore() {
+
+        if(!gameStarted) {
+            startGame()
+        }
+
         //incrementing score logic
         score++
 
@@ -63,7 +69,7 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-
+                endGame()
             }
         }
 
@@ -73,9 +79,13 @@ class GameActivity : AppCompatActivity() {
 
     private fun startGame() {
         //start game logic
+        countdownTimer.start()
+        gameStarted = true
     }
 
     private fun endGame() {
         //end game logic
+        Toast.makeText(this, getString(R.string.game_over_message, Integer.toString(score)), Toast.LENGTH_LONG).show()
+        resetGame()
     }
 }
